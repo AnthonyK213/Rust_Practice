@@ -1,5 +1,5 @@
 [package]
-name = "ne2bl"
+name = "genref"
 version = "0.1.0"
 authors = ["AnthonyK213 <tjjzqwh@163.com>"]
 edition = "2018"

@@ -19,9 +19,13 @@ fn main() {
     let paths = fs::read_dir(dir_path).unwrap();
     for path in paths {
         let file_path = path.unwrap().path();
-        if file_path.extension().unwrap() == "net" {
-            bib_list.push_str(&ne2bl(&file_path, num));
-            num += 1;
+        let file_extn = file_path.extension();
+        if let Some(extn) = file_extn {
+            match extn.to_str().unwrap() {
+                "net" => {bib_list.push_str(&ne2bl(&file_path, num)); num += 1;},
+                "bib" => {bib_list.push_str(&bl2st(&file_path, num)); num += 1;},
+                _ => {}
+            }
         }
     }
 
@@ -58,6 +62,19 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
             _ => bibtext.push_str(&format!("  {}={{{}}},\n", &new_key, &ne_disc))
         }
     }
-    bibtext.push_str("}\n\n");
-    bibtext
+    bibtext + ("}\n\n")
+}
+
+fn bl2st(bl_path: &Path, num: u16) -> String {
+    let file = fs::File::open(bl_path).unwrap();
+    let reader = BufReader::new(file);
+    let mut content: String = String::new();
+    for line in reader.lines() {
+        let line = line.unwrap();
+        if line != "" {
+            content += &line;
+            content += "\n";
+        }
+    }
+    content + "\n"
 }
