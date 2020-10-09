@@ -14,7 +14,7 @@ fn main() {
     let dir_path = &format!("{}{}", ne_dir, dir_name);
 
     let mut bib_list: String = String::from("");
-    let mut num: u16 = 0;
+    let mut num: u16 = 1;
 
     let paths = fs::read_dir(dir_path).unwrap();
     for path in paths {
@@ -55,7 +55,10 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
                     "Journal Article" => bibtext.push_str(&format!("@article{{{},\n", &num)),
                     "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", &num)),
                     "Thesis" => bibtext.push_str(&format!("@mastersthesis{{{},\n", &num)),
-                    _ => println!("Something else?")
+                    _ => {
+                        bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
+                        println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
+                    }
                 }
             }, 
             "issue" => bibtext.push_str(&format!("  number={{{}}},\n", &ne_disc)), 

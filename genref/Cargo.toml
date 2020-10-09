@@ -8,5 +8,5 @@ edition = "2018"
 
 [dependencies]
 
-[profile.release]
-lto = true
+[profile.release.package.cratename]
+opt-level = 3
