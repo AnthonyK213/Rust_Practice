@@ -1,4 +1,3 @@
-// Git test
 #![allow(unused)]
 
 use std::io::{BufRead, BufReader};
