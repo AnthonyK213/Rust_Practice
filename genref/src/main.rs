@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use std::io::{BufRead, BufReader};
 use std::env;
 use std::fs;
@@ -23,7 +21,7 @@ fn main() {
         if let Some(extn) = file_extn {
             match extn.to_str().unwrap() {
                 "net" => {bib_list.push_str(&ne2bl(&file_path, num)); num += 1;},
-                "bib" => {bib_list.push_str(&bl2st(&file_path, num)); num += 1;},
+                "bib" => {bib_list.push_str(&bl2st(&file_path)); num += 1;},
                 _ => {}
             }
         }
@@ -68,7 +66,7 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
     bibtext + ("}\n\n")
 }
 
-fn bl2st(bl_path: &Path, num: u16) -> String {
+fn bl2st(bl_path: &Path) -> String {
     let file = fs::File::open(bl_path).unwrap();
     let reader = BufReader::new(file);
     let mut content: String = String::new();
