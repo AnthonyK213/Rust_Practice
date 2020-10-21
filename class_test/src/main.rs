@@ -4,7 +4,7 @@ mod class;
 use class::*;
 use std::time::Instant;
 
-fn print_coordinate<T: Coordinate>(p: &T, name: &str) {
+fn print_coordinate<T>(p: &T, name: &str) where T: Coordinate {
     println!("The coordinate of {} is {:?};", name, p.co());
 }
 
@@ -75,4 +75,6 @@ fn main() {
 
     let time_end = Instant::now();
     println!("Time = {:?}", time_end.duration_since(time_start));
+
+    println!("");
 }

@@ -217,10 +217,11 @@ impl Line {
     }
 
     pub fn point_at(&self, prm: f64) -> Point3d {
+        let f = |x: f64, y: f64| (1.0 - y) * x + y * x;
         return Point3d::new(
-            (1.0 - prm) * self.point_at_start.x + prm * self.point_at_end.x,
-            (1.0 - prm) * self.point_at_start.y + prm * self.point_at_end.y,
-            (1.0 - prm) * self.point_at_start.z + prm * self.point_at_end.z
+            f(self.point_at_start.x, prm),
+            f(self.point_at_start.y, prm),
+            f(self.point_at_start.z, prm)
         );
     }
 }
