@@ -8,7 +8,6 @@ fn main() {
     let dir_name: &str = &args[1];
 
     let ne_dir = "./";
-    // let ne_dir = "D:/Anthony/Desktop/";
     let dir_path = &format!("{}{}", ne_dir, dir_name);
 
     let mut bib_list: String = String::from("");
@@ -27,7 +26,7 @@ fn main() {
         }
     }
 
-    fs::write(format!("{}/ref.bib", ne_dir), bib_list).unwrap();
+    fs::write(format!("{}ref.bib", ne_dir), bib_list).unwrap();
 }
 
 fn ne2bl(ne_path: &Path, num: u16) -> String {
