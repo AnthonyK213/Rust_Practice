@@ -287,7 +287,29 @@ impl Circle {
 // END class: Circle.
 
 // START class: Polyline;
-struct Polyline {
+pub struct Polyline {
+    pub vertices: Vec<Point3d>,
+    pub is_closed: bool
+}
 
+impl Polyline {
+    pub fn new(vertices: Vec<Point3d>, is_closed: bool) -> Self {
+        Self {
+            vertices,
+            is_closed
+        }
+    }
+
+    pub fn len(&self) -> f64 {
+        let mut length = 0_f64;
+        for _i in 0..(self.vertices.len() - 1) {
+            length += self.vertices[_i].dist_to(&self.vertices[_i + 1]);
+        }
+        if self.is_closed == true {
+            length + self.vertices[0].dist_to(&self.vertices.last().unwrap())
+        } else {
+            length
+        }
+    }
 }
 // END class: Polyline.
