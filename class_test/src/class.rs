@@ -2,6 +2,8 @@ pub trait Coordinate {
     fn co(&self) -> (f64, f64, f64);
 }
 
+const PI: f64 = std::f64::consts::PI;
+
 
 /********** Function *********/
 pub fn add<T: Coordinate>(a: &T, b: &T) -> Vector3d {
@@ -271,16 +273,16 @@ impl Circle {
     }
 
     pub fn circum(&self) -> f64 {
-        return 2.0 * std::f64::consts::PI * self.radius;
+        return 2.0 * PI * self.radius;
     }
 
     pub fn area(&self) -> f64 {
-        return std::f64::consts::PI * self.radius * self.radius;
+        return PI * self.radius * self.radius;
     }
 
     pub fn point_at(&self, prm: f64) -> Point3d {
         let base_vec = mult(&self.plane.X, self.radius);
-        let prm_vec = rotate(&base_vec, &self.plane.Z, 2.0 * prm * std::f64::consts::PI);
+        let prm_vec = rotate(&base_vec, &self.plane.Z, 2.0 * prm * PI);
         return self.center.copy_along(&prm_vec);
     }
 }
@@ -310,6 +312,14 @@ impl Polyline {
         } else {
             length
         }
+    }
+
+    pub fn add(&mut self, pt: Point3d) {
+        self.vertices.push(pt);
+    }
+
+    pub fn join(&self, pl: Polyline) {
+
     }
 }
 // END class: Polyline.

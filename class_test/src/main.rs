@@ -84,7 +84,7 @@ fn main() {
     let v_04 = Point3d::new(-1.0,  1.0, 0.0);
     let mut pl_a = Polyline::new(vec!(v_01, v_02, v_03, v_04), true);
     println!("The length of polyline is: {}", pl_a.len());
-    pl_a.vertices.push(Point3d::new(0.0, 2.0, 0.0));
-    print_coordinate(pl_a.vertices.first().unwrap(), "last");
+    pl_a.add(Point3d::new(0.0, 2.0, 0.0));
+    print_coordinate(pl_a.vertices.last().unwrap(), "last");
     println!("The length of polyline is: {}", pl_a.len());
 }
