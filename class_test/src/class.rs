@@ -314,12 +314,16 @@ impl Polyline {
         }
     }
 
-    pub fn add(&mut self, pt: Point3d) {
+    pub fn append_node(&mut self, pt: Point3d) {
         self.vertices.push(pt);
     }
 
-    pub fn join(&self, pl: Polyline) {
-
+    pub fn append_polyline(&mut self, pl: Polyline) {
+        if self.vertices.last().unwrap().dist_to(&pl.vertices[0]) <= 1e-5 {
+            for i in 1..pl.vertices.len() {
+                self.vertices.push(pl.vertices[i]);
+            }
+        } 
     }
 }
 // END class: Polyline.

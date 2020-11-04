@@ -82,9 +82,15 @@ fn main() {
     let v_02 = Point3d::new(1.0,  -1.0, 0.0);
     let v_03 = Point3d::new(-1.0, -1.0, 0.0);
     let v_04 = Point3d::new(-1.0,  1.0, 0.0);
-    let mut pl_a = Polyline::new(vec!(v_01, v_02, v_03, v_04), true);
+    let v_05 = Point3d::new(0.0,   2.0, 0.0);
+    let v_06 = Point3d::new(2.0,   2.0, 0.0);
+    let v_07 = Point3d::new(2.0,   2.0, 1.0);
+    let mut pl_a = Polyline::new(vec!(v_01, v_02, v_03, v_04), false);
     println!("The length of polyline is: {}", pl_a.len());
-    pl_a.add(Point3d::new(0.0, 2.0, 0.0));
+    pl_a.append_node(v_05);
     print_coordinate(pl_a.vertices.last().unwrap(), "last");
+    println!("The length of polyline is: {}", pl_a.len());
+    let pl_b = Polyline::new(vec!(v_05, v_06, v_07), false);
+    pl_a.append_polyline(pl_b);
     println!("The length of polyline is: {}", pl_a.len());
 }
