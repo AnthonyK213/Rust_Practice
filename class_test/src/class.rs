@@ -325,5 +325,11 @@ impl Polyline {
             }
         } 
     }
+
+    pub fn closed(&mut self) {
+        if !self.is_closed {
+            self.is_closed = true
+        }
+    }
 }
 // END class: Polyline.
