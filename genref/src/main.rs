@@ -49,9 +49,9 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
         match new_key {
             "referencetype" => {
                 match ne_disc {
-                    "Journal Article" => bibtext.push_str(&format!("@article{{{},\n", &num)),
+                    "Journal Article"        => bibtext.push_str(&format!("@article{{{},\n", &num)),
                     "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", &num)),
-                    "Thesis" => bibtext.push_str(&format!("@mastersthesis{{{},\n", &num)),
+                    "Thesis"                 => bibtext.push_str(&format!("@mastersthesis{{{},\n", &num)),
                     _ => {
                         bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
                         println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
