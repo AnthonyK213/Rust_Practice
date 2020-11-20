@@ -1,30 +1,23 @@
-fn quick_sort(vct: &mut Vec<i32>) -> Vec<i32> {
-    if vct.len() >= 2 {
-        let mut left: Vec<i32> = Vec::new();
-        let mut right: Vec<i32> = Vec::new();
-        let mut res: Vec<i32> = Vec::new();
-
-        let mid: i32 = vct[vct.len()>>1];
-        vct.remove(vct.len()>>1);
-
-        for num in vct.iter() {
-            if num >= &mid {
-                right.push(*num);
-            } else {
-                left.push(*num);
-            }
-        }
-
-        res.append(&mut quick_sort(&mut left));
-        res.push(mid);
-        res.append(&mut quick_sort(&mut right));
-        return res;
-    } else {
-        return vct.to_vec();
-    }
+fn main() {
+    let sort_list = vec![3, 1, 4, 1, 5, 9, 2, 6];
+    println!("{:?}", quick_sort(&sort_list));
 }
 
-fn main() {
-    let mut vct: Vec<i32> = vec![2, 3, 5, 7, 1, 4, 6, 10, 0, 13, 15, 5, 2, 7, 9, 10, 15, 9, 17, 12];
-    println!("{:?}", quick_sort(&mut vct));
+fn quick_sort<T: Ord + Copy>(set: &Vec<T>) -> Vec<T> {
+    match set.len() {
+        0 | 1 => set.to_vec(),
+        _ => {
+            let mut l_side: Vec<T> = vec![];
+            let mut r_side: Vec<T> = vec![];
+            let m: &T = &set[0];
+            for i in 1..set.len() {
+                if &set[i] <= m {
+                    l_side.push(set[i]);
+                } else {
+                    r_side.push(set[i]);
+                }
+            }
+            [quick_sort(&l_side), quick_sort(&r_side)].join(m)
+        }
+    }
 }
