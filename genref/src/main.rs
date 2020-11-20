@@ -26,9 +26,11 @@ fn main() {
         }
     }
 
+    // Is this correct?
     fs::write(format!("{}ref.bib", ne_dir), bib_list).unwrap();
 }
 
+// Hashmap may be better. Hitherto, pattern matching is fine.
 fn ne2bl(ne_path: &Path, num: u16) -> String {
     let file = fs::File::open(ne_path).unwrap();
     let reader = BufReader::new(file);
