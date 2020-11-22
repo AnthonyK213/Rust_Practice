@@ -26,3 +26,12 @@ fn quick_sort<T>(set: &Vec<T>) -> Vec<T>
         }
     }
 }
+
+fn quick_sort_next<T>(set: &mut [T]) where T: PartialOrd + Copy {
+    match set.len() {
+        0 | 1 => return,
+        _ => {
+            return;
+        }
+    }
+}
