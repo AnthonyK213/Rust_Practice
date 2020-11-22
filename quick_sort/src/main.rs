@@ -33,7 +33,8 @@ fn quick_sort<T>(arr: &Vec<T>) -> Vec<T>
     }
 }
 
-fn self_quick_sort<T: PartialOrd + Copy>(arr: &mut [T], start: usize, end: usize) {
+fn self_quick_sort<T>(arr: &mut [T], start: usize, end: usize)
+    where T: PartialOrd + Copy {
     if start == end { return; }
 
     let pivot = arr[start];
