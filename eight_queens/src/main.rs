@@ -1,18 +1,27 @@
+use std::time::Instant;
+
 static mut COUNT: usize = 0;
-const QUEEN: usize = 16;
+const QUEEN: usize = 15;
 
 fn main() {
     let mut qlist: [i32;QUEEN] = [0;QUEEN];
     for i in 0..QUEEN { qlist[i] = i as i32; }
 
+    let stt = Instant::now();
     n_queens(&mut qlist, 0);
+    let end = Instant::now();
+
+    unsafe {
+        println!("{}", COUNT);
+        println!("{:?}", end.duration_since(stt));
+    }
 }
 
 fn n_queens(result: &mut [i32], split: usize) {
     if split == QUEEN {
         unsafe {
             COUNT += 1;
-            println!("{:?} {}", result, COUNT);
+            //println!("{:?} {}", result, COUNT);
         }
         return;
     }
