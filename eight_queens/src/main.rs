@@ -1,7 +1,7 @@
 static mut COUNT: usize = 0;
 
 fn main() {
-    let queen: usize = 12;
+    let queen: usize = 8;
 
     let mut qlist: Vec<i32> = Vec::new();
     for i in 0..queen {
