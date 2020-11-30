@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 static mut COUNT: usize = 0;
-const QUEEN: usize = 15;
+const QUEEN: usize = 8;
 
 fn main() {
     let mut qlist: [i32;QUEEN] = [0;QUEEN];
