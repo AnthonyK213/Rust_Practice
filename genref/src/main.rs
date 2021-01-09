@@ -61,6 +61,7 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
                 }
             },
             "issue" => bibtext.push_str(&format!("  number={{{}}},\n", &ne_disc)), 
+            "abstract" => {},
             _ => bibtext.push_str(&format!("  {}={{{}}},\n", &new_key, &ne_disc))
         }
     }
