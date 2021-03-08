@@ -46,23 +46,26 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
 
     for line in content {
         let ne_line: Vec<&str> = line.split("}: ").collect();
-        let new_key: &str = &ne_line[0][1..].to_lowercase().as_str().replace(" ", "");
-        let ne_disc: &str = ne_line[1];
-        match new_key {
-            "referencetype" => {
-                match ne_disc {
-                    "Journal Article"        => bibtext.push_str(&format!("@article{{{},\n", &num)),
-                    "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", &num)),
-                    "Thesis"                 => bibtext.push_str(&format!("@mastersthesis{{{},\n", &num)),
-                    _ => {
-                        bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
-                        println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
+
+        if line != "" && ne_line.len() > 1 {
+            let new_key: &str = &ne_line[0][1..].to_lowercase().as_str().replace(" ", "");
+            let ne_disc: &str = ne_line[1];
+            match new_key {
+                "referencetype" => {
+                    match ne_disc {
+                        "Journal Article"        => bibtext.push_str(&format!("@article{{{},\n", &num)),
+                        "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", &num)),
+                        "Thesis"                 => bibtext.push_str(&format!("@mastersthesis{{{},\n", &num)),
+                        _ => {
+                            bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
+                            println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
+                        }
                     }
-                }
-            },
-            "issue" => bibtext.push_str(&format!("  number={{{}}},\n", &ne_disc)), 
-            "abstract" => {},
-            _ => bibtext.push_str(&format!("  {}={{{}}},\n", &new_key, &ne_disc))
+                },
+                "issue" => bibtext.push_str(&format!("  number={{{}}},\n", &ne_disc)), 
+                "abstract" => {},
+                _ => bibtext.push_str(&format!("  {}={{{}}},\n", &new_key, &ne_disc))
+            }
         }
     }
     bibtext + ("}\n\n")
