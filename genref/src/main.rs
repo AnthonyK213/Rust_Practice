@@ -43,8 +43,22 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
     }
 
     let mut bibtext: String = "".to_string();
+    let mut title_str = "";
 
-    for line in content {
+    for line in &content {
+        let ne_line: Vec<&str> = line.split("}: ").collect();
+
+        if line != "" && ne_line.len() > 1 {
+            let new_key: &str = &ne_line[0][1..].to_lowercase().as_str().replace(" ", "");
+            let ne_disc: &str = ne_line[1];
+            match new_key {
+                "title" => { title_str = ne_disc; break; },
+                _ => { }
+            }
+        }
+    }
+
+    for line in &content {
         let ne_line: Vec<&str> = line.split("}: ").collect();
 
         if line != "" && ne_line.len() > 1 {
@@ -53,9 +67,9 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
             match new_key {
                 "referencetype" => {
                     match ne_disc {
-                        "Journal Article"        => bibtext.push_str(&format!("@article{{{},\n", &num)),
-                        "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", &num)),
-                        "Thesis"                 => bibtext.push_str(&format!("@mastersthesis{{{},\n", &num)),
+                        "Journal Article"        => bibtext.push_str(&format!("@article{{{},\n", title_str)),
+                        "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", title_str)),
+                        "Thesis"                 => bibtext.push_str(&format!("@mastersthesis{{{},\n", title_str)),
                         _ => {
                             bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
                             println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
