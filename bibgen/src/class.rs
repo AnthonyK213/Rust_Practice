@@ -62,18 +62,30 @@ impl BibNE {
                 match new_key {
                     "referencetype" => {
                         match new_val {
-                            "Journal Article"        => bib_txt.push_str(&format!("@article{{{},\n",       &ttl)),
-                            "Conference Proceedings" => bib_txt.push_str(&format!("@inproceedings{{{},\n", &ttl)),
-                            "Thesis"                 => bib_txt.push_str(&format!("@mastersthesis{{{},\n", &ttl)),
+                            "Journal Article"
+                                => bib_txt.push_str(
+                                    &format!("@article{{{},\n", &ttl)),
+                            "Conference Proceedings"
+                                => bib_txt.push_str(
+                                    &format!("@inproceedings{{{},\n", &ttl)),
+                            "Thesis"
+                                => bib_txt.push_str(
+                                    &format!("@mastersthesis{{{},\n", &ttl)),
                             _ => {
-                                bib_txt.push_str(&format!("//@{}{{{},\n", new_val, &ttl));
-                                println!("Unknown type of article: \"{}\" => {}", new_val, &ttl);
+                                bib_txt.push_str(
+                                    &format!("//@{}{{{},\n", new_val, &ttl));
+                                println!(
+                                    "Unknown type of article: \"{}\" => {}",
+                                    new_val, &ttl);
                             }
                         }
                     },
-                    "issue" => bib_txt.push_str(&format!("  number={{{}}},\n", &new_val)), 
+                    "issue"
+                        => bib_txt.push_str(
+                            &format!("  number={{{}}},\n", &new_val)), 
                     "abstract" => {},
-                    _ => bib_txt.push_str(&format!("  {}={{{}}},\n", &new_key, &new_val))
+                    _ => bib_txt.push_str(
+                        &format!("  {}={{{}}},\n", &new_key, &new_val))
                 }
             }
         }
