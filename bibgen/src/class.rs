@@ -1,9 +1,9 @@
 use std::fs;
-use std::path::Path;
 use std::io::{BufRead, BufReader};
+use std::path::Path;
 
 pub struct BibNE {
-    content: Vec<String>
+    content: Vec<String>,
 }
 
 impl BibNE {
@@ -32,13 +32,14 @@ impl BibNE {
                     .chars()
                     .map(|x| match x {
                         ' ' | '(' | ')' | ',' | '{' | '}' => '_',
-                        _ => x
-                    }).collect::<String>();
+                        _ => x,
+                    })
+                    .collect::<String>();
                 match key {
                     "{Title}" => {
                         tt_str = val.to_string();
                         break;
-                    },
+                    }
                     _ => {}
                 };
             }
@@ -60,32 +61,20 @@ impl BibNE {
                 let new_val: &str = ne_line[1];
                 let ttl = self.title();
                 match new_key {
-                    "referencetype" => {
-                        match new_val {
-                            "Journal Article"
-                                => bib_txt.push_str(
-                                    &format!("@article{{{},\n", &ttl)),
-                            "Conference Proceedings"
-                                => bib_txt.push_str(
-                                    &format!("@inproceedings{{{},\n", &ttl)),
-                            "Thesis"
-                                => bib_txt.push_str(
-                                    &format!("@mastersthesis{{{},\n", &ttl)),
-                            _ => {
-                                bib_txt.push_str(
-                                    &format!("//@{}{{{},\n", new_val, &ttl));
-                                println!(
-                                    "Unknown type of article: \"{}\" => {}",
-                                    new_val, &ttl);
-                            }
+                    "referencetype" => match new_val {
+                        "Journal Article" => bib_txt.push_str(&format!("@article{{{},\n", &ttl)),
+                        "Conference Proceedings" => {
+                            bib_txt.push_str(&format!("@inproceedings{{{},\n", &ttl))
+                        }
+                        "Thesis" => bib_txt.push_str(&format!("@mastersthesis{{{},\n", &ttl)),
+                        _ => {
+                            bib_txt.push_str(&format!("//@{}{{{},\n", new_val, &ttl));
+                            println!("Unknown type of article: \"{}\" => {}", new_val, &ttl);
                         }
                     },
-                    "issue"
-                        => bib_txt.push_str(
-                            &format!("  number={{{}}},\n", &new_val)), 
-                    "abstract" => {},
-                    _ => bib_txt.push_str(
-                        &format!("  {}={{{}}},\n", &new_key, &new_val))
+                    "issue" => bib_txt.push_str(&format!("  number={{{}}},\n", &new_val)),
+                    "abstract" => {}
+                    _ => bib_txt.push_str(&format!("  {}={{{}}},\n", &new_key, &new_val)),
                 }
             }
         }

@@ -1,7 +1,6 @@
 mod class;
 use class::*;
-use std::{fs, env};
-
+use std::{env, fs};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -21,8 +20,10 @@ fn main() {
                 "net" => {
                     let bib_ne = BibNE::new(&file_path);
                     bib_list.push_str(&bib_ne.gen());
-                },
-                "bib" => {bib_list.push_str(&bl2st(&file_path));},
+                }
+                "bib" => {
+                    bib_list.push_str(&bl2st(&file_path));
+                }
                 _ => {}
             }
         }
