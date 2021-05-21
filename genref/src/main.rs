@@ -1,6 +1,6 @@
-use std::io::{BufRead, BufReader};
 use std::env;
 use std::fs;
+use std::io::{BufRead, BufReader};
 use std::path::Path;
 
 fn main() {
@@ -19,8 +19,14 @@ fn main() {
         let file_extn = file_path.extension();
         if let Some(extn) = file_extn {
             match extn.to_str().unwrap() {
-                "net" => {bib_list.push_str(&ne2bl(&file_path, num)); num += 1;},
-                "bib" => {bib_list.push_str(&bl2st(&file_path)); num += 1;},
+                "net" => {
+                    bib_list.push_str(&ne2bl(&file_path, num));
+                    num += 1;
+                }
+                "bib" => {
+                    bib_list.push_str(&bl2st(&file_path));
+                    num += 1;
+                }
                 _ => {}
             }
         }
@@ -52,8 +58,11 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
             let new_key: &str = &ne_line[0][1..].to_lowercase().as_str().replace(" ", "");
             let ne_disc: &str = ne_line[1];
             match new_key {
-                "title" => { title_str = ne_disc; break; },
-                _ => { }
+                "title" => {
+                    title_str = ne_disc;
+                    break;
+                }
+                _ => {}
             }
         }
     }
@@ -65,20 +74,20 @@ fn ne2bl(ne_path: &Path, num: u16) -> String {
             let new_key: &str = &ne_line[0][1..].to_lowercase().as_str().replace(" ", "");
             let ne_disc: &str = ne_line[1];
             match new_key {
-                "referencetype" => {
-                    match ne_disc {
-                        "Journal Article"        => bibtext.push_str(&format!("@article{{{},\n", title_str)),
-                        "Conference Proceedings" => bibtext.push_str(&format!("@inproceedings{{{},\n", title_str)),
-                        "Thesis"                 => bibtext.push_str(&format!("@mastersthesis{{{},\n", title_str)),
-                        _ => {
-                            bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
-                            println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
-                        }
+                "referencetype" => match ne_disc {
+                    "Journal Article" => bibtext.push_str(&format!("@article{{{},\n", title_str)),
+                    "Conference Proceedings" => {
+                        bibtext.push_str(&format!("@inproceedings{{{},\n", title_str))
+                    }
+                    "Thesis" => bibtext.push_str(&format!("@mastersthesis{{{},\n", title_str)),
+                    _ => {
+                        bibtext.push_str(&format!("//@{}{{{},\n", ne_disc, &num));
+                        println!("Unknown type of article: \"{}\" => {}", ne_disc, &num);
                     }
                 },
-                "issue" => bibtext.push_str(&format!("  number={{{}}},\n", &ne_disc)), 
-                "abstract" => {},
-                _ => bibtext.push_str(&format!("  {}={{{}}},\n", &new_key, &ne_disc))
+                "issue" => bibtext.push_str(&format!("  number={{{}}},\n", &ne_disc)),
+                "abstract" => {}
+                _ => bibtext.push_str(&format!("  {}={{{}}},\n", &new_key, &ne_disc)),
             }
         }
     }

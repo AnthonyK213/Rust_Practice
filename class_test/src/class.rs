@@ -4,22 +4,17 @@ pub trait Coordinate {
 
 const PI: f64 = std::f64::consts::PI;
 
-
 /********** Function *********/
 pub fn add<T: Coordinate>(a: &T, b: &T) -> Vector3d {
     return Vector3d::new(
         a.co().0 + b.co().0,
         a.co().1 + b.co().1,
-        a.co().2 + b.co().2
+        a.co().2 + b.co().2,
     );
 }
 
 pub fn mult<T: Coordinate>(a: &T, b: f64) -> Vector3d {
-    return Vector3d::new(
-        a.co().0 * b,
-        a.co().1 * b,
-        a.co().2 * b
-    );
+    return Vector3d::new(a.co().0 * b, a.co().1 * b, a.co().2 * b);
 }
 
 pub fn rotate(v: &Vector3d, axis: &Vector3d, angle: f64) -> Vector3d {
@@ -39,13 +34,12 @@ pub fn rotate(v: &Vector3d, axis: &Vector3d, angle: f64) -> Vector3d {
         let e = a * angle.sin() + b * angle.cos();
 
         return Vector3d::new(
-            d * x_axis_local.x + e * y_axis_local.x + c * z_axis_local.x, 
-            d * x_axis_local.y + e * y_axis_local.y + c * z_axis_local.y, 
-            d * x_axis_local.z + e * y_axis_local.z + c * z_axis_local.z
+            d * x_axis_local.x + e * y_axis_local.x + c * z_axis_local.x,
+            d * x_axis_local.y + e * y_axis_local.y + c * z_axis_local.y,
+            d * x_axis_local.z + e * y_axis_local.z + c * z_axis_local.z,
         );
     }
 }
-
 
 /********** Class ************/
 // BEGIN class: Vector3d;
@@ -53,7 +47,7 @@ pub fn rotate(v: &Vector3d, axis: &Vector3d, angle: f64) -> Vector3d {
 pub struct Vector3d {
     pub x: f64,
     pub y: f64,
-    pub z: f64
+    pub z: f64,
 }
 
 impl Coordinate for Vector3d {
@@ -62,12 +56,12 @@ impl Coordinate for Vector3d {
     }
 }
 
-impl Vector3d{
+impl Vector3d {
     pub fn new(x_co: f64, y_co: f64, z_co: f64) -> Vector3d {
         Vector3d {
             x: x_co,
             y: y_co,
-            z: z_co
+            z: z_co,
         }
     }
 
@@ -75,7 +69,7 @@ impl Vector3d{
         Vector3d {
             x: point.x,
             y: point.y,
-            z: point.z
+            z: point.z,
         }
     }
 
@@ -83,7 +77,7 @@ impl Vector3d{
         Vector3d {
             x: to_point.x - from_point.x,
             y: to_point.y - from_point.y,
-            z: to_point.z - from_point.z
+            z: to_point.z - from_point.z,
         }
     }
 
@@ -100,17 +94,13 @@ impl Vector3d{
     }
 
     pub fn scale(&mut self, mult: f64) {
-        self.x *= mult; 
-        self.y *= mult; 
+        self.x *= mult;
+        self.y *= mult;
         self.z *= mult;
     }
 
     pub fn len(&self) -> f64 {
-        let dist: f64 = (
-            (self.x).powi(2) + 
-            (self.y).powi(2) + 
-            (self.z).powi(2)
-        ).sqrt();
+        let dist: f64 = ((self.x).powi(2) + (self.y).powi(2) + (self.z).powi(2)).sqrt();
         return dist;
     }
 
@@ -124,9 +114,9 @@ impl Vector3d{
 
     pub fn cross(&self, vector: &Vector3d) -> Vector3d {
         return Vector3d::new(
-            self.y * vector.z - self.z * vector.y, 
-            self.z * vector.x - self.x * vector.z, 
-            self.x * vector.y - self.y * vector.x
+            self.y * vector.z - self.z * vector.y,
+            self.z * vector.x - self.x * vector.z,
+            self.x * vector.y - self.y * vector.x,
         );
     }
 
@@ -157,7 +147,7 @@ impl Vector3d{
 pub struct Point3d {
     pub x: f64,
     pub y: f64,
-    pub z: f64
+    pub z: f64,
 }
 
 impl Coordinate for Point3d {
@@ -171,7 +161,7 @@ impl Point3d {
         Point3d {
             x: x_co,
             y: y_co,
-            z: z_co
+            z: z_co,
         }
     }
 
@@ -182,19 +172,14 @@ impl Point3d {
     }
 
     pub fn copy_along(&self, vec: &Vector3d) -> Point3d {
-        return Point3d::new(
-            self.x + vec.x,
-            self.y + vec.y,
-            self.z + vec.z
-        );
+        return Point3d::new(self.x + vec.x, self.y + vec.y, self.z + vec.z);
     }
 
     pub fn dist_to(&self, to_point: &Point3d) -> f64 {
-        let dist: f64 = (
-            (self.x - to_point.x).powi(2) + 
-            (self.y - to_point.y).powi(2) + 
-            (self.z - to_point.z).powi(2)
-        ).sqrt();
+        let dist: f64 = ((self.x - to_point.x).powi(2)
+            + (self.y - to_point.y).powi(2)
+            + (self.z - to_point.z).powi(2))
+        .sqrt();
         return dist;
     }
 }
@@ -203,14 +188,14 @@ impl Point3d {
 // BEGIN class: Line;
 pub struct Line {
     pub point_at_start: Point3d,
-    pub point_at_end: Point3d
+    pub point_at_end: Point3d,
 }
 
 impl Line {
     pub fn new(a: Point3d, b: Point3d) -> Line {
         Line {
             point_at_start: a,
-            point_at_end: b
+            point_at_end: b,
         }
     }
 
@@ -223,7 +208,7 @@ impl Line {
         return Point3d::new(
             f(self.point_at_start.x, prm),
             f(self.point_at_start.y, prm),
-            f(self.point_at_start.z, prm)
+            f(self.point_at_start.z, prm),
         );
     }
 }
@@ -235,7 +220,7 @@ pub struct Plane {
     pub O: Point3d,
     pub X: Vector3d,
     pub Y: Vector3d,
-    pub Z: Vector3d
+    pub Z: Vector3d,
 }
 
 impl Plane {
@@ -247,7 +232,7 @@ impl Plane {
                 O: o,
                 X: x,
                 Y: y,
-                Z: x.cross(&y)
+                Z: x.cross(&y),
             }
         } else {
             panic!("x_axis and y_axis must be perpandicular!");
@@ -260,7 +245,7 @@ impl Plane {
 pub struct Circle {
     pub plane: Plane,
     pub center: Point3d,
-    pub radius: f64
+    pub radius: f64,
 }
 
 impl Circle {
@@ -268,7 +253,7 @@ impl Circle {
         Circle {
             plane: p,
             center: p.O,
-            radius: r
+            radius: r,
         }
     }
 
@@ -291,14 +276,14 @@ impl Circle {
 // START class: Polyline;
 pub struct Polyline {
     pub vertices: Vec<Point3d>,
-    pub is_closed: bool
+    pub is_closed: bool,
 }
 
 impl Polyline {
     pub fn new(vertices: Vec<Point3d>, is_closed: bool) -> Self {
         Self {
             vertices,
-            is_closed
+            is_closed,
         }
     }
 
@@ -323,7 +308,7 @@ impl Polyline {
             for i in 1..pl.vertices.len() {
                 self.vertices.push(pl.vertices[i]);
             }
-        } 
+        }
     }
 
     pub fn closed(&mut self) {

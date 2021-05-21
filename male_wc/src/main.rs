@@ -11,7 +11,7 @@ fn wc(n: usize) -> usize {
             } else {
                 return 2 * wc((n + 1) / 2) - 1;
             }
-        },
+        }
     }
 }
 

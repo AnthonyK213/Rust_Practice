@@ -1,13 +1,14 @@
 #[allow(unused)]
-
 mod class;
 use class::*;
 use std::time::Instant;
 
-fn print_coordinate<T>(p: &T, name: &str) where T: Coordinate {
+fn print_coordinate<T>(p: &T, name: &str)
+where
+    T: Coordinate,
+{
     println!("The coordinate of {} is {:?};", name, p.co());
 }
-
 
 // Main.
 fn main() {
@@ -33,7 +34,10 @@ fn main() {
     println!("Middle point of line is {:?};", line_1.point_at(0.5).co());
     println!("Addition of v_a and v_b is {:?};", add(&v_a, &v_b).co());
     println!("Dot product of v_a and v_b is {};", v_a.dot(&v_b));
-    println!("Cross product of v_a and v_b is {:?};", v_a.cross(&v_b).co());
+    println!(
+        "Cross product of v_a and v_b is {:?};",
+        v_a.cross(&v_b).co()
+    );
 
     println!("\n****************************************\n");
 
@@ -55,7 +59,10 @@ fn main() {
     let vec_global = Vector3d::new(2.2222e6, -3.3333e6, -1.257e-5);
     let vec_local = Vector3d::new(-1.09975e-8, -4.00617e6, -2.8982e-5);
 
-    println!("|vec_global| / |vec_local| = {}", vec_global.len() / vec_local.len());
+    println!(
+        "|vec_global| / |vec_local| = {}",
+        vec_global.len() / vec_local.len()
+    );
 
     println!("\n****************************************\n");
     let axis = Vector3d::new(0.0, 1.0, 2.0);
@@ -78,11 +85,11 @@ fn main() {
 
     println!("");
 
-    let v_01 = Point3d::new(1.0,   1.0, 0.0);
-    let v_02 = Point3d::new(1.0,  -1.0, 0.0);
+    let v_01 = Point3d::new(1.0, 1.0, 0.0);
+    let v_02 = Point3d::new(1.0, -1.0, 0.0);
     let v_03 = Point3d::new(-1.0, -1.0, 0.0);
-    let v_04 = Point3d::new(-1.0,  1.0, 0.0);
-    let mut pl_a = Polyline::new(vec!(v_01, v_02, v_03, v_04), false);
+    let v_04 = Point3d::new(-1.0, 1.0, 0.0);
+    let mut pl_a = Polyline::new(vec![v_01, v_02, v_03, v_04], false);
     println!("The length of polyline is: {}", pl_a.len());
     pl_a.append_node(Point3d::new(0.0, 2.0, 0.0));
     println!("The length of polyline is: {}", pl_a.len());
