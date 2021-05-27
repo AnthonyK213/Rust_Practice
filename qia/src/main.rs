@@ -1,9 +1,9 @@
-use std::io::{BufRead, BufReader};
-use std::env;
-use std::io::prelude::*;
-use std::fs::{File, OpenOptions};
-use std::{thread, time};
 use device_query::{DeviceQuery, DeviceState, Keycode};
+use std::env;
+use std::fs::{File, OpenOptions};
+use std::io::prelude::*;
+use std::io::{BufRead, BufReader};
+use std::{thread, time};
 
 fn main() {
     let device_state = DeviceState::new();
@@ -20,7 +20,15 @@ fn main() {
         }
     }
     let mut n = 0;
-    let place = ["西1f", "西嘬面", "学自选", "西自选", "学2f", "四食堂", "西3f"];
+    let place = [
+        "西1f",
+        "西嘬面",
+        "学自选",
+        "西自选",
+        "学2f",
+        "四食堂",
+        "西3f",
+    ];
     loop {
         let keys: Vec<Keycode> = device_state.get_keys();
         let index = n % place.len();
