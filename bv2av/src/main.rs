@@ -10,10 +10,11 @@ use std::iter::FromIterator;
 fn main() {
     // Map the string to integer.
     let table = [
-        'f', 'Z', 'o', 'd', 'R', '9', 'X', 'Q', 'D', 'S', 'U', 'm', '2', '1', 'y', 'C', 'k', 'r',
-        '6', 'z', 'B', 'q', 'i', 'v', 'e', 'Y', 'a', 'h', '8', 'b', 't', '4', 'x', 's', 'W', 'p',
-        'H', 'n', 'J', 'E', '7', 'j', 'L', '5', 'V', 'G', '3', 'g', 'u', 'M', 'T', 'K', 'N', 'P',
-        'A', 'w', 'c', 'F',
+        'f', 'Z', 'o', 'd', 'R', '9', 'X', 'Q', 'D', 'S', 'U', 'm', '2', '1',
+        'y', 'C', 'k', 'r', '6', 'z', 'B', 'q', 'i', 'v', 'e', 'Y', 'a', 'h',
+        '8', 'b', 't', '4', 'x', 's', 'W', 'p', 'H', 'n', 'J', 'E', '7', 'j',
+        'L', '5', 'V', 'G', '3', 'g', 'u', 'M', 'T', 'K', 'N', 'P', 'A', 'w',
+        'c', 'F',
     ];
     let mut map = HashMap::new();
     let mut k: u64 = 0;
